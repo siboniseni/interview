@@ -1,15 +1,28 @@
 <template>
   <div class="container">
-    <button class="new-project-button" @click="showForm = true">New Project</button>
-    <ul class="project-list">
-      <li v-for="project in projects" :key="project.id" class="project-item">
+    <h1 class="title">Projects</h1>
+    <div class="search-container">
+      <button class="search-button" @click="showSearchForm = true">Search</button>
+      <div class="search-form" v-show="showSearchForm">
+        <form @submit.prevent="filterProjects">
+          <input type="text" v-model="searchText" placeholder="Search by name or project name">
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+    <div class="project-list">
+      <div v-for="project in projects" :key="project.id" class="project-item" @mouseover="highlightProject(project.id)" @mouseout="resetProjectHighlight(project.id)">
         <div class="project-details">
           <div class="customer-name">{{ project.customerName }}</div>
           <div class="project-name">{{ project.projectName }}</div>
-          <div class="time-ago">{{ project.timeAgo }}</div>
+          <div class="time-ago">{{ calculateTimeAgo(project.createdAt) }}</div>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
+
+    <div class="new-project-container">
+      <button class="new-project-button" @click="showForm = true">New Project</button>
+    </div>
 
     <div class="form-modal" v-if="showForm">
       <div class="form-modal-content">
@@ -33,25 +46,36 @@
 import { defineComponent } from 'vue';
 import moment from 'moment';
 
+interface Project {
+  id: number;
+  customerName: string;
+  projectName: string;
+  createdAt: Date;
+}
+
 export default defineComponent({
   data() {
     return {
       projects: [
-        { id: 1, customerName: 'John Doe', projectName: 'Project 1', createdAt: new Date() },
-        { id: 2, customerName: 'Jane Smith', projectName: 'Project 2', createdAt: new Date() },
+        { id: 1, customerName: 'John Allen Cena', projectName: 'Project 1', createdAt: new Date() },
+        { id: 2, customerName: 'Jane W Smith', projectName: 'Project 2', createdAt: new Date() },
         { id: 3, customerName: 'Alex Johnson', projectName: 'Project 3', createdAt: new Date() },
-      ],
-      projectIdCounter: 4,
+        { id: 4, customerName: 'Andile Jali', projectName: 'Project 4', createdAt: new Date() },
+      ] as Project[],
+      projectIdCounter: 5,
       newProject: {
         customerName: '',
         projectName: '',
-      },
+      } as Project,
       showForm: false,
+      showSearchForm: false,
+      searchText: '',
+      highlightedProjectId: null as null | number,
     };
   },
   methods: {
     createProject() {
-      const newProject = {
+      const newProject: Project = {
         id: this.projectIdCounter,
         customerName: this.newProject.customerName,
         projectName: this.newProject.projectName,
@@ -63,8 +87,24 @@ export default defineComponent({
       this.newProject.projectName = '';
       this.showForm = false;
     },
-    calculateTimeAgo(createdAt: Date) {
+    calculateTimeAgo(createdAt: Date): string {
       return moment(createdAt).fromNow();
+    },
+    filterProjects() {
+      this.projects = this.projects.filter(
+        (project) =>
+          project.customerName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          project.projectName.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+      this.showSearchForm = false;
+    },
+    highlightProject(id: number) {
+      this.highlightedProjectId = id;
+    },
+    resetProjectHighlight(id: number) {
+      if (this.highlightedProjectId === id) {
+        this.highlightedProjectId = null;
+      }
     },
   },
 });
@@ -75,45 +115,134 @@ export default defineComponent({
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
+  background: #ccc;
 }
 
-.new-project-button {
-  background-color: #4caf50;
+.title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-button {
+  background-color: #1606f0;
   color: white;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+  margin-left: 10px;
+  flex-shrink: 0;
+  border-radius: 20px;
+}
+
+@media (max-width: 600px) {
+  .search-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-container .search-button {
+    margin-top: 10px;
+  }
+}
+
+.new-project-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.new-project-button {
+  background-color: #0b07f5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 20px;
+  width: 500px;
 }
 
 .project-list {
-  list-style-type: none;
-  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .project-item {
-  margin-bottom: 20px;
+  width: 200px;
+  height: 230px;
   background-color: #f4f4f4;
-  border-radius: 5px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background-color 0.3s ease;
+}
+
+.project-item:hover {
+  background-color: #254ccc;
 }
 
 .project-details {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
 }
 
 .customer-name {
   font-weight: bold;
+  margin-bottom: auto;
+}
+
+.project-info {
+  display: flex;
+  flex-direction: column;
 }
 
 .project-name {
-  margin-top: 5px;
+  font-weight: bold;
 }
 
 .time-ago {
   color: gray;
   font-size: 12px;
+}
+
+.search-form {
+  margin-top: 10px;
+}
+
+.search-form form {
+  display: flex;
+  align-items: center;
+}
+
+.search-form input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-form button[type="submit"] {
+  background-color: #1606f0;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 4px;
 }
 
 .form-modal {
@@ -126,6 +255,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999;
 }
 
 .form-modal-content {
@@ -142,6 +272,7 @@ export default defineComponent({
 .form-modal-content form {
   display: flex;
   flex-direction: column;
+  background-color: #ccc;
 }
 
 .form-modal-content label {
@@ -156,8 +287,8 @@ export default defineComponent({
 }
 
 .form-modal-content button[type="submit"] {
-  background-color: #4caf50;
-  color: white;
+  background-color: #344fc5;
+  color: rgb(94, 92, 92);
   border: none;
   padding: 10px 20px;
   font-size: 16px;
@@ -175,4 +306,6 @@ export default defineComponent({
   cursor: pointer;
 }
 </style>
+
+
 
