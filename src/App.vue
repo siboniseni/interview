@@ -2,10 +2,11 @@
   <div class="container">
     <h1 class="title">Projects</h1>
     <div class="search-container">
-      <button class="search-button" @click="showSearchForm = true">Search</button>
+      <button v-if="!showSearchForm" class="search-button" @click="showSearchForm = true">
+        <i class="fa-solid fa-magnifying-glass"></i>Search</button>
       <div class="search-form" v-show="showSearchForm">
         <form @submit.prevent="filterProjects">
-          <input type="text" v-model="searchText" placeholder="Search by name or project name">
+          <input type="text" v-model="searchText" placeholder="Search by name or project name"/>
           <button type="submit">Search</button>
         </form>
       </div>
@@ -19,6 +20,16 @@
         </div>
       </div>
     </div>
+    
+    <div v-if="selectedProject" class="selected-project">
+    <h2>Selected Project</h2>
+    <div class="project-details">
+      <div class="customer-name">{{ selectedProject.customerName }}</div>
+      <div class="project-name">{{ selectedProject.projectName }}</div>
+      <div class="time-ago">{{ calculateTimeAgo(selectedProject.createdAt) }}</div>
+    </div>
+    <button @click="editProject(selectedProject)">Edit</button>
+  </div>
 
     <div class="new-project-container">
       <button class="new-project-button" @click="showForm = true">New Project</button>
@@ -45,6 +56,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import moment from 'moment';
+import '@fortawesome/fontawesome-free/css/all.css';
+
 
 interface Project {
   id: number;
@@ -57,10 +70,10 @@ export default defineComponent({
   data() {
     return {
       projects: [
-        { id: 1, customerName: 'John Allen Cena', projectName: 'Project 1', createdAt: new Date() },
-        { id: 2, customerName: 'Jane W Smith', projectName: 'Project 2', createdAt: new Date() },
-        { id: 3, customerName: 'Alex Johnson', projectName: 'Project 3', createdAt: new Date() },
-        { id: 4, customerName: 'Andile Jali', projectName: 'Project 4', createdAt: new Date() },
+        { id: 1, customerName: 'John Allen Cena', projectName: 'Project name', createdAt: new Date() },
+        { id: 2, customerName: 'Jane W Smith', projectName: 'Project name', createdAt: new Date() },
+        { id: 3, customerName: 'Alex Johnson', projectName: 'Project name', createdAt: new Date() },
+        { id: 4, customerName: 'Andile Jali', projectName: 'Project name', createdAt: new Date() },
       ] as Project[],
       projectIdCounter: 5,
       newProject: {
@@ -71,6 +84,7 @@ export default defineComponent({
       showSearchForm: false,
       searchText: '',
       highlightedProjectId: null as null | number,
+      selectedProject: null as null | Project,
     };
   },
   methods: {
@@ -86,6 +100,7 @@ export default defineComponent({
       this.newProject.customerName = '';
       this.newProject.projectName = '';
       this.showForm = false;
+      this.selectedProject = newProject;
     },
     calculateTimeAgo(createdAt: Date): string {
       return moment(createdAt).fromNow();
@@ -112,7 +127,8 @@ export default defineComponent({
 
 <style scoped>
 .container {
-  max-width: 600px;
+  max-width: 460px;
+  height: 100vh;
   margin: 0 auto;
   padding: 20px;
   background: #ccc;
@@ -127,17 +143,17 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .search-button {
-  background-color: #1606f0;
-  color: white;
+  background-color: #ffffff;
+  color: rgb(33, 12, 228);
   border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: 5px;
   flex-shrink: 0;
   border-radius: 20px;
 }
@@ -151,12 +167,6 @@ export default defineComponent({
   .search-container .search-button {
     margin-top: 10px;
   }
-}
-
-.new-project-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
 }
 
 .new-project-button {
@@ -181,7 +191,7 @@ export default defineComponent({
   height: 230px;
   background-color: #f4f4f4;
   border-radius: 10px;
-  padding: 20px;
+  padding: 10px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -191,7 +201,7 @@ export default defineComponent({
 }
 
 .project-item:hover {
-  background-color: #254ccc;
+  background-color: #9db9ec;
 }
 
 .project-details {
@@ -201,8 +211,8 @@ export default defineComponent({
 }
 
 .customer-name {
-  font-weight: bold;
   margin-bottom: auto;
+  color: #383737;
 }
 
 .project-info {
@@ -212,6 +222,8 @@ export default defineComponent({
 
 .project-name {
   font-weight: bold;
+  margin-bottom: 4.5cm;
+  font-size: 20px;
 }
 
 .time-ago {
@@ -243,6 +255,14 @@ export default defineComponent({
   cursor: pointer;
   margin-left: 10px;
   border-radius: 4px;
+}
+
+.new-project-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
 }
 
 .form-modal {
@@ -287,8 +307,8 @@ export default defineComponent({
 }
 
 .form-modal-content button[type="submit"] {
-  background-color: #344fc5;
-  color: rgb(94, 92, 92);
+  background-color: #4060ec;
+  color: rgb(255, 254, 254);
   border: none;
   padding: 10px 20px;
   font-size: 16px;
@@ -306,6 +326,5 @@ export default defineComponent({
   cursor: pointer;
 }
 </style>
-
 
 
