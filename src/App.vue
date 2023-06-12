@@ -125,6 +125,7 @@ export default defineComponent({
 .title {
   font-size: 24px;
   margin-bottom: 10px;
+  
 }
 
 .search-container {
