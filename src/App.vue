@@ -21,16 +21,6 @@
       </div>
     </div>
     
-    <div v-if="selectedProject" class="selected-project">
-    <h2>Selected Project</h2>
-    <div class="project-details">
-      <div class="customer-name">{{ selectedProject.customerName }}</div>
-      <div class="project-name">{{ selectedProject.projectName }}</div>
-      <div class="time-ago">{{ calculateTimeAgo(selectedProject.createdAt) }}</div>
-    </div>
-    <button @click="editProject(selectedProject)">Edit</button>
-  </div>
-
     <div class="new-project-container">
       <button class="new-project-button" @click="showForm = true">New Project</button>
     </div>
@@ -84,7 +74,6 @@ export default defineComponent({
       showSearchForm: false,
       searchText: '',
       highlightedProjectId: null as null | number,
-      selectedProject: null as null | Project,
     };
   },
   methods: {
@@ -100,7 +89,6 @@ export default defineComponent({
       this.newProject.customerName = '';
       this.newProject.projectName = '';
       this.showForm = false;
-      this.selectedProject = newProject;
     },
     calculateTimeAgo(createdAt: Date): string {
       return moment(createdAt).fromNow();
