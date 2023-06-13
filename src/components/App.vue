@@ -139,12 +139,12 @@ export default defineComponent({
   margin: 0 auto;
   padding: 20px;
   background: #ccc;
+  overflow-y: auto;
 }
 
 .title {
   font-size: 40px;
   margin-bottom: 10px;
-  
 }
 
 .search-container {
@@ -177,10 +177,13 @@ export default defineComponent({
   }
 }
 .project-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 10px;
+  max-height: calc(100% - 50px);
+  overflow-y: auto;
 }
+
 
 .project-item {
   width: 200px;
