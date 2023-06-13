@@ -138,7 +138,7 @@ export default defineComponent({
   height: auto;
   margin: 0 auto;
   padding: 20px;
-  background: #ccc;
+  background: #d6d5d5;
   overflow-y: auto;
 }
 
@@ -154,7 +154,7 @@ export default defineComponent({
 }
 
 .search-button {
-  background-color: #ffffff;
+  background-color: #ccc;
   color: rgb(33, 12, 228);
   border: none;
   padding: 10px 20px;
