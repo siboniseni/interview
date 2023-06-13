@@ -81,10 +81,10 @@ export default defineComponent({
         { id: 2, customerName: 'Jane W Smith', projectName: 'Project name', createdAt: new Date() },
         { id: 3, customerName: 'Alex Johnson', projectName: 'Project name', createdAt: new Date() },
         { id: 4, customerName: 'Andile Jali', projectName: 'Project name', createdAt: new Date() },
-        { id: 3, customerName: 'Kasa Siboniseni', projectName: 'Project name', createdAt: new Date() },
-        { id: 4, customerName: 'Athanathi K', projectName: 'Project name', createdAt: new Date() },
+        { id: 5, customerName: 'Kasa Siboniseni', projectName: 'Project name', createdAt: new Date() },
+        { id: 6, customerName: 'Athanathi K', projectName: 'Project name', createdAt: new Date() },
       ] as Project[],
-      projectIdCounter: 5,
+      projectIdCounter: 7,
       newProject: {
         customerName: '',
         projectName: '',
@@ -176,18 +176,6 @@ export default defineComponent({
     margin-top: 10px;
   }
 }
-
-.new-project-button {
-  background-color: #0b07f5;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 20px;
-  width: 500px;
-}
-
 .project-list {
   display: flex;
   flex-wrap: wrap;
@@ -264,10 +252,19 @@ export default defineComponent({
   margin-left: 10px;
   border-radius: 4px;
 }
-
+.new-project-button {
+  background-color: #0b07f5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 20px;
+  width: 350px;
+}
 .new-project-container {
   position: fixed;
-  bottom: 20px;
+  bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 999;
@@ -334,12 +331,7 @@ export default defineComponent({
   cursor: pointer;
 }
 
-.footer {
-  background-color: #f4f4f4;
-  padding: 10px;
-  text-align: center;
-  font-size: 14px;
-}
+
 .footer-icons {
   display: flex;
   justify-content: space-between;
@@ -362,7 +354,18 @@ export default defineComponent({
   text-align: center;
   font-size: 14px;
 }
-
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%; 
+  max-width: 460px; 
+  margin-left: auto; 
+  margin-right: auto; 
+  background-color: #f4f4f4;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
 
 </style>
 
