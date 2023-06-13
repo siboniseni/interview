@@ -44,15 +44,15 @@
     <footer class="footer">
       <div class="footer-icons">
         <div class="footer-icon">
-          <i class="fa-regular fa-circle-dot"></i>
+          <i class="fa-regular fa-circle-dot"></i><br>
           <span>Projects</span>
         </div>
         <div class="footer-icon">
-          <i class="fa-solid fa-gear"></i>
+          <i class="fa-solid fa-gear"></i><br>
           <span>Customers</span>
         </div>
         <div class="footer-icon">
-          <i class="fa-regular fa-circle-dot"></i>
+          <i class="fa-regular fa-circle-dot"></i><br>
           <span>Company</span>
         </div>
       </div>
@@ -146,7 +146,6 @@ export default defineComponent({
   font-size: 40px;
   margin-bottom: 10px;
 }
-
 .search-container {
   display: flex;
   align-items: center;
@@ -323,7 +322,6 @@ export default defineComponent({
   cursor: pointer;
   margin-top: 10px;
 }
-
 .close-button {
   margin-top: 10px;
   background-color: #ccc;
@@ -334,18 +332,19 @@ export default defineComponent({
   cursor: pointer;
 }
 
+.footer-icons {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
 
 .footer-icons {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-}
-
-.footer-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .footer-icon i {
@@ -358,18 +357,15 @@ export default defineComponent({
   font-size: 14px;
 }
 .footer {
+  width: 100%;
+  background-color: #ccc;
+  text-align: center;
   position: fixed;
   bottom: 0;
-  width: 100%; 
   max-width: 460px; 
   margin-left: auto; 
   margin-right: auto; 
-  background-color: #f4f4f4;
-  padding: 10px;
-  text-align: center;
-  font-size: 14px;
 }
 
 </style>
-
 
