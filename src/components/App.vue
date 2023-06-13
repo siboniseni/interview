@@ -40,6 +40,24 @@
         <button class="close-button" @click="showForm = false">Close</button>
       </div>
     </div>
+
+    <footer class="footer">
+      <div class="footer-icons">
+        <div class="footer-icon">
+          <i class="fa-regular fa-circle-dot"></i>
+          <span>Projects</span>
+        </div>
+        <div class="footer-icon">
+          <i class="fa-solid fa-gear"></i>
+          <span>Customers</span>
+        </div>
+        <div class="footer-icon">
+          <i class="fa-regular fa-circle-dot"></i>
+          <span>Company</span>
+        </div>
+      </div>
+    </footer>
+  
   </div>
 </template>
 
@@ -47,7 +65,6 @@
 import { defineComponent } from 'vue';
 import moment from 'moment';
 import '@fortawesome/fontawesome-free/css/all.css';
-
 
 interface Project {
   id: number;
@@ -64,6 +81,8 @@ export default defineComponent({
         { id: 2, customerName: 'Jane W Smith', projectName: 'Project name', createdAt: new Date() },
         { id: 3, customerName: 'Alex Johnson', projectName: 'Project name', createdAt: new Date() },
         { id: 4, customerName: 'Andile Jali', projectName: 'Project name', createdAt: new Date() },
+        { id: 3, customerName: 'Kasa Siboniseni', projectName: 'Project name', createdAt: new Date() },
+        { id: 4, customerName: 'Athanathi K', projectName: 'Project name', createdAt: new Date() },
       ] as Project[],
       projectIdCounter: 5,
       newProject: {
@@ -116,14 +135,14 @@ export default defineComponent({
 <style scoped>
 .container {
   max-width: 460px;
-  height: 100vh;
+  height: auto;
   margin: 0 auto;
   padding: 20px;
   background: #ccc;
 }
 
 .title {
-  font-size: 24px;
+  font-size: 40px;
   margin-bottom: 10px;
   
 }
@@ -314,6 +333,37 @@ export default defineComponent({
   font-size: 14px;
   cursor: pointer;
 }
+
+.footer {
+  background-color: #f4f4f4;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+.footer-icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.footer-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-icon i {
+  margin-bottom: 5px;
+}
+
+.footer p {
+  margin-top: 0;
+  text-align: center;
+  font-size: 14px;
+}
+
+
 </style>
 
 
