@@ -1,6 +1,9 @@
 <template>
   <div class="container">
+    <!-- Page title -->
     <h1 class="title">Projects</h1>
+
+    <!-- Search form -->
     <div class="search-container">
       <button v-if="!showSearchForm" class="search-button" @click="showSearchForm = true">
         <i class="fa-solid fa-magnifying-glass"></i>Search</button>
@@ -11,6 +14,8 @@
         </form>
       </div>
     </div>
+
+    <!-- Project list -->
     <div class="project-list">
       <div v-for="project in projects" :key="project.id" class="project-item" @mouseover="highlightProject(project.id)" @mouseout="resetProjectHighlight(project.id)">
         <div class="project-details">
@@ -21,10 +26,12 @@
       </div>
     </div>
     
+    <!-- New project button -->
     <div class="new-project-container">
       <button class="new-project-button" @click="showForm = true">New Project</button>
     </div>
 
+    <!-- New project form modal -->
     <div class="form-modal" v-if="showForm">
       <div class="form-modal-content">
         <h2>Create New Project</h2>
@@ -41,6 +48,7 @@
       </div>
     </div>
 
+    <!-- Footer -->
     <footer class="footer">
       <div class="footer-icons">
         <div class="footer-icon">
@@ -76,6 +84,7 @@ interface Project {
 export default defineComponent({
   data() {
     return {
+      // Array of projects
       projects: [
         { id: 1, customerName: 'John Allen Cena', projectName: 'Project name', createdAt: new Date() },
         { id: 2, customerName: 'Jane W Smith', projectName: 'Project name', createdAt: new Date() },
@@ -85,10 +94,12 @@ export default defineComponent({
         { id: 6, customerName: 'Athanathi K', projectName: 'Project name', createdAt: new Date() },
       ] as Project[],
       projectIdCounter: 7,
+      // Object to store data for a new project
       newProject: {
         customerName: '',
         projectName: '',
       } as Project,
+      // Flag to show or hide the search form
       showForm: false,
       showSearchForm: false,
       searchText: '',
@@ -96,6 +107,7 @@ export default defineComponent({
     };
   },
   methods: {
+    // Create a new project
     createProject() {
       const newProject: Project = {
         id: this.projectIdCounter,
@@ -109,9 +121,11 @@ export default defineComponent({
       this.newProject.projectName = '';
       this.showForm = false;
     },
+    // Calculate time ago from the project creation date
     calculateTimeAgo(createdAt: Date): string {
       return moment(createdAt).fromNow();
     },
+    // Filter projects based on the search text
     filterProjects() {
       this.projects = this.projects.filter(
         (project) =>
@@ -120,9 +134,11 @@ export default defineComponent({
       );
       this.showSearchForm = false;
     },
+    // Highlight a project when mouse is over it
     highlightProject(id: number) {
       this.highlightedProjectId = id;
     },
+    // Reset the highlight on a project when mouse leaves it
     resetProjectHighlight(id: number) {
       if (this.highlightedProjectId === id) {
         this.highlightedProjectId = null;
@@ -164,7 +180,7 @@ export default defineComponent({
   flex-shrink: 0;
   border-radius: 20px;
 }
-
+/* Responsive styles for smaller screens */
 @media (max-width: 600px) {
   .search-container {
     flex-direction: column;
